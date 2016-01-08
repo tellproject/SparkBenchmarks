@@ -33,13 +33,12 @@ class Q7 extends BenchmarkQuery {
     import org.apache.spark.sql.functions._
     import sqlCxt.implicits._
 
-    val orders = dfReader.option("table", "order").load()
-    val customer = dfReader.option("table", "customer").load()
-    val orderline = dfReader.option("table", "order-line").load()
-
-    val stock = dfReader.option("table", "stock").load()
-    val supplier = dfReader.option("table", "supplier").load()
-    val nation = dfReader.option("table", "nation").option("useSmallMemory", "true").load()
+    val customer = dfReader.options(getTableOptions("customer")).load()
+    val orders = dfReader.options(getTableOptions("order")).load()
+    val orderline = dfReader.options(getTableOptions("order-line")).load()
+    val nation = dfReader.options(getTableOptions("nation", ("useSmallMemory" -> "true"))).load()
+    val supplier = dfReader.options(getTableOptions("supplier")).load()
+    val stock = dfReader.options(getTableOptions("stock")).load()
 
     // we know that the filter on dates below 2012, returns 0 results
     // val forderline = orderline.filter($"ol_o_id" <= 0)

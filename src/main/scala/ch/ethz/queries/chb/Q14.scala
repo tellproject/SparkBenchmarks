@@ -22,8 +22,8 @@ class Q14 extends BenchmarkQuery {
     import org.apache.spark.sql.functions._
     import sqlCxt.implicits._
 
-    val orderline = dfReader.option("table", "order-line").load()
-    val item = dfReader.option("table", "item").load()
+    val orderline = dfReader.options(getTableOptions("order-line")).load()
+    val item = dfReader.options(getTableOptions("item")).load()
 
     val forderline = orderline.filter($"ol_delivery_d" >= 20070102 && $"ol_delivery_d" < 20200102)
     forderline.join(item, $"ol_i_id" === item("i_id"))

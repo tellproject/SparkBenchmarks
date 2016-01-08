@@ -23,8 +23,8 @@ class Q13 extends BenchmarkQuery {
     import org.apache.spark.sql.functions._
     import sqlCxt.implicits._
 
-    val orders = dfReader.option("table", "order").load()
-    val customer = dfReader.option("table", "customer").load()
+    val customer = dfReader.options(getTableOptions("customer")).load()
+    val orders = dfReader.options(getTableOptions("order")).load()
 
     val forders = orders.filter($"o_carrier_id" > 8)
     val c_orders = customer.join(forders, $"c_w_id" === forders("o_w_id") &&

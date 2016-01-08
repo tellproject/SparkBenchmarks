@@ -32,12 +32,12 @@ class Q9 extends BenchmarkQuery {
     import org.apache.spark.sql.functions._
     import sqlCxt.implicits._
 
-    val orders = dfReader.option("table", "order").load()
-    val orderline = dfReader.option("table", "order-line").load()
-    val stock = dfReader.option("table", "stock").load()
-    val supplier = dfReader.option("table", "supplier").load()
-    val nation = dfReader.option("table", "nation").option("useSmallMemory", "true").load()
-    val item = dfReader.option("table", "item").load()
+    val orders = dfReader.options(getTableOptions("order")).load()
+    val orderline = dfReader.options(getTableOptions("order-line")).load()
+    val nation = dfReader.options(getTableOptions("nation", ("useSmallMemory" -> "true"))).load()
+    val supplier = dfReader.options(getTableOptions("supplier")).load()
+    val stock = dfReader.options(getTableOptions("stock")).load()
+    val item = dfReader.options(getTableOptions("item")).load()
 
     val fitem = item.filter($"i_data".like("%BB"))
     val s_n = supplier.join(nation, nation("n_nationkey") === $"su_nationkey")

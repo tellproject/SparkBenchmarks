@@ -43,8 +43,8 @@ class Q19 extends BenchmarkQuery {
     import org.apache.spark.sql.functions._
     import sqlCxt.implicits._
 
-    val orderline = dfReader.option("table", "order-line").load()
-    val item = dfReader.option("table", "item").load()
+    val orderline = dfReader.options(getTableOptions("order-line")).load()
+    val item = dfReader.options(getTableOptions("item")).load()
 
     val forderline = orderline.filter($"ol_quantity" >= 1 && $"ol_quantity" <= 10)
     val fitem = item.filter($"i_price" >= 100 && $"i_price" <= 4000000)

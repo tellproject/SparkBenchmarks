@@ -27,8 +27,8 @@ class Q12 extends BenchmarkQuery {
 
     import sqlCxt.implicits._
 
-    val orders = dfReader.option("table", "order").load()
-    val orderline = dfReader.option("table", "order-line").load()
+    val orders = dfReader.options(getTableOptions("order")).load()
+    val orderline = dfReader.options(getTableOptions("order-line")).load()
 
     val forderline = orderline.filter($"ol_delivery_d" < 20200101)
     orders.join(forderline, forderline("ol_w_id") === $"o_w_id" &&

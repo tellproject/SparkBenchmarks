@@ -21,9 +21,10 @@ class Q18 extends BenchmarkQuery {
     import org.apache.spark.sql.functions._
     import sqlCxt.implicits._
 
-    val orders = dfReader.option("table", "order").load()
-    val customer = dfReader.option("table", "customer").load()
-    val orderline = dfReader.option("table", "order-line").load()
+
+    val customer = dfReader.options(getTableOptions("customer")).load()
+    val orders = dfReader.options(getTableOptions("order")).load()
+    val orderline = dfReader.options(getTableOptions("order-line")).load()
 
     customer.join(orders, $"c_id" === orders("o_c_id") &&
       $"c_w_id" === orders("o_w_id") &&

@@ -19,7 +19,7 @@ class Q6 extends BenchmarkQuery {
     import org.apache.spark.sql.functions._
     import sqlCxt.implicits._
 
-    val orderline = dfReader.option("table", "order-line").load()
+    val orderline = dfReader.options(getTableOptions("order-line")).load()
 
     orderline
       .filter($"ol_delivery_d" >= 19990101)

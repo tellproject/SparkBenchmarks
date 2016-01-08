@@ -21,8 +21,8 @@ class Q17 extends BenchmarkQuery {
     import org.apache.spark.sql.functions._
     import sqlCxt.implicits._
 
-    val orderline = dfReader.option("table", "order-line").load()
-    val item = dfReader.option("table", "item").load()
+    val orderline = dfReader.options(getTableOptions("order-line")).load()
+    val item = dfReader.options(getTableOptions("item")).load()
 
     val orderline1 = orderline
     val orderline2 = orderline

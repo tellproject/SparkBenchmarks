@@ -30,11 +30,11 @@ class Q20 extends BenchmarkQuery {
     import org.apache.spark.sql.functions._
     import sqlCxt.implicits._
 
-    val orderline = dfReader.option("table", "order-line").load()
-    val stock = dfReader.option("table", "stock").load()
-    val supplier = dfReader.option("table", "supplier").load()
-    val nation = dfReader.option("table", "nation").option("useSmallMemory", "true").load()
-    val item = dfReader.option("table", "item").load()
+    val orderline = dfReader.options(getTableOptions("order-line")).load()
+    val nation = dfReader.options(getTableOptions("nation", ("useSmallMemory" -> "true"))).load()
+    val supplier = dfReader.options(getTableOptions("supplier")).load()
+    val stock = dfReader.options(getTableOptions("stock")).load()
+    val item = dfReader.options(getTableOptions("item")).load()
 
     //select i_id from item where i_data like 'co%'
     val fitem = item.filter($"i_data".like("co%")).select($"i_id")

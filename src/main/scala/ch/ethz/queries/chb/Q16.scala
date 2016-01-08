@@ -24,9 +24,9 @@ class Q16  extends BenchmarkQuery {
     import org.apache.spark.sql.functions._
     import sqlCxt.implicits._
 
-    val stock = dfReader.option("table", "stock").load()
-    val supplier = dfReader.option("table", "supplier").load()
-    val item = dfReader.option("table", "item").load()
+    val supplier = dfReader.options(getTableOptions("supplier")).load()
+    val stock = dfReader.options(getTableOptions("stock")).load()
+    val item = dfReader.options(getTableOptions("item")).load()
 
     val fsupplier = supplier
       .filter($"su_comment".like("%bad%"))

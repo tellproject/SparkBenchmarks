@@ -22,10 +22,10 @@ class Q3 extends BenchmarkQuery {
     import org.apache.spark.sql.functions._
     import sqlCxt.implicits._
 
-    val orders = dfReader.option("table", "order").load()
-    val customer = dfReader.option("table", "customer").load()
-    val orderline = dfReader.option("table", "order-line").load()
-    val new_order = dfReader.option("table", "new-order").load()
+    val customer = dfReader.options(getTableOptions("customer")).load()
+    val orders = dfReader.options(getTableOptions("order")).load()
+    val new_order = dfReader.options(getTableOptions("new-order")).load()
+    val orderline = dfReader.options(getTableOptions("order-line")).load()
 
     customer
       .filter(customer("c_state").like("A%"))

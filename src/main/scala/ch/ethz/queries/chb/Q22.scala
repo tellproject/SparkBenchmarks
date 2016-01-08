@@ -30,9 +30,9 @@ class Q22 extends BenchmarkQuery {
 
     import org.apache.spark.sql.functions._
     import sqlCxt.implicits._
-
-    val orders = dfReader.option("table", "order").load()
-    val customer = dfReader.option("table", "customer").load()
+    
+    val customer = dfReader.options(getTableOptions("customer")).load()
+    val orders = dfReader.options(getTableOptions("order")).load()
 
     val fcustomer = customer.filter($"c_phone".substr(1, 1).isin("1", "2", "3", "4", "5", "6", "7"))
     val avg_cbal = fcustomer.filter($"c_balance" > 0).select($"c_balance").agg(avg($"c_balance").as("avg_balance"))

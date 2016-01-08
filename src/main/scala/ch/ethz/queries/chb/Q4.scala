@@ -26,16 +26,8 @@ class Q4 extends BenchmarkQuery {
     import org.apache.spark.sql.functions._
     import sqlCxt.implicits._
 
-    val order = dfReader.option("table", "order").load()
-    val orderline = dfReader.option("table", "order-line").load()
-
-//    val customer = dfReader.options(getTableOptions("customer")).load()
-//    val order = dfReader.options(getTableOptions("order")).load()
-//    val lineitem = dfReader.options(getTableOptions("lineitem")).load()
-    //    val region = dfReader.options(getTableOptions("nation", ("useSmallMemory" -> "true"))).load()
-    //    val supplier = dfReader.options(getTableOptions("supplier")).load()
-    //    val partsupp = dfReader.options(getTableOptions("partsupp")).load()
-    //    val part = dfReader.options(getTableOptions("part")).load()
+    val order = dfReader.options(getTableOptions("order")).load()
+    val orderline = dfReader.options(getTableOptions("order-line")).load()
 
     /**
       * select * from orderline
