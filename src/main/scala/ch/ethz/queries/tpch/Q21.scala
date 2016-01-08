@@ -15,10 +15,10 @@ class Q21 extends BenchmarkQuery {
     import org.apache.spark.sql.functions._
     import sqlCxt.implicits._
 
-    val nation = dfReader.option("table", "nation").option("useSmallMemory", "true").load()
-    val order = dfReader.option("table", "order").load()
-    val lineitem = dfReader.option("table", "lineitem").load()
-    val supplier = dfReader.option("table", "supplier").load()
+    val order = dfReader.options(getTableOptions("order")).load()
+    val lineitem = dfReader.options(getTableOptions("lineitem")).load()
+    val nation = dfReader.options(getTableOptions("nation", ("useSmallMemory" -> "true"))).load()
+    val supplier = dfReader.options(getTableOptions("supplier")).load()
 
     val fsupplier = supplier.select($"s_suppkey", $"s_nationkey", $"s_name")
 

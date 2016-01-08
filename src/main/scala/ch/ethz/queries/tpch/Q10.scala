@@ -13,17 +13,15 @@ import scala.collection.mutable
 class Q10 extends BenchmarkQuery {
 
 
-
-
   override def executeQuery(sqlCxt: SQLContext, dfReader: DataFrameReader): DataFrame = {
 
     import org.apache.spark.sql.functions._
     import sqlCxt.implicits._
 
-    val nation = dfReader.options(getTableOptions("nation", ("useSmallMemory" -> "true"))).load()
     val customer = dfReader.options(getTableOptions("customer")).load()
     val order = dfReader.options(getTableOptions("order")).load()
     val lineitem = dfReader.options(getTableOptions("lineitem")).load()
+    val nation = dfReader.options(getTableOptions("nation", ("useSmallMemory" -> "true"))).load()
 
     val decrease = udf { (x: Double, y: Double) => x * (1 - y) }
 

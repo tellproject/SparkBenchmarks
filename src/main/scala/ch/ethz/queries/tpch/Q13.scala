@@ -15,14 +15,8 @@ class Q13 extends BenchmarkQuery {
     import org.apache.spark.sql.functions._
     import sqlCxt.implicits._
 
-    //    val region = dfReader.option("table", "region").option("useSmallMemory", "true").load()
-    //    val nation = dfReader.option("table", "nation").option("useSmallMemory", "true").load()
-    val customer = dfReader.option("table", "customer").load()
-    val order = dfReader.option("table", "order").load()
-    //    val lineitem = dfReader.option("table", "lineitem").load()
-    //    val supplier = dfReader.option("table", "supplier").load()
-    //    val partsupp = dfReader.option("table", "partsupp").load()
-    //    val part = dfReader.option("table", "part").load()
+    val customer = dfReader.options(getTableOptions("customer")).load()
+    val order = dfReader.options(getTableOptions("order")).load()
 
     val special = udf { (x: String) => x.matches(".*special.*requests.*") }
 

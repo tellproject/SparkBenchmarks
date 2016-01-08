@@ -19,12 +19,12 @@ class Q9 extends BenchmarkQuery {
     import org.apache.spark.sql.functions._
     import sqlCxt.implicits._
 
-    val nation = dfReader.option("table", "nation").option("useSmallMemory", "true").load()
-    val order = dfReader.option("table", "order").load()
-    val lineitem = dfReader.option("table", "lineitem").load()
-    val supplier = dfReader.option("table", "supplier").load()
-    val partsupp = dfReader.option("table", "partsupp").load()
-    val part = dfReader.option("table", "part").load()
+    val order = dfReader.options(getTableOptions("order")).load()
+    val lineitem = dfReader.options(getTableOptions("lineitem")).load()
+    val nation = dfReader.options(getTableOptions("nation", ("useSmallMemory" -> "true"))).load()
+    val supplier = dfReader.options(getTableOptions("supplier")).load()
+    val partsupp = dfReader.options(getTableOptions("partsupp")).load()
+    val part = dfReader.options(getTableOptions("part")).load()
 
     val linePart = part.filter($"p_name".contains("green"))
       .join(lineitem, $"p_partkey" === lineitem("l_partkey"))
@@ -36,7 +36,7 @@ class Q9 extends BenchmarkQuery {
         && $"l_partkey" === partsupp("ps_partkey"))
       .join(order, $"l_orderkey" === order("o_orderkey"))
       .select($"n_name", getYear($"o_orderdate").as("o_year")
-        ,getAmount($"l_extendedprice", $"l_discount", $"ps_supplycost", $"l_quantity").as("amount"))
+        , getAmount($"l_extendedprice", $"l_discount", $"ps_supplycost", $"l_quantity").as("amount"))
       .groupBy($"n_name", $"o_year")
       .agg(sum($"amount"))
       .sort($"n_name", $"o_year".desc)

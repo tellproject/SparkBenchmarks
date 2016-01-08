@@ -15,13 +15,13 @@ class Q8 extends BenchmarkQuery {
     import org.apache.spark.sql.functions._
     import sqlCxt.implicits._
 
-    val region = dfReader.option("table", "region").option("useSmallMemory", "true").load()
-    val nation = dfReader.option("table", "nation").option("useSmallMemory", "true").load()
-    val customer = dfReader.option("table", "customer").load()
-    val order = dfReader.option("table", "order").load()
-    val lineitem = dfReader.option("table", "lineitem").load()
-    val supplier = dfReader.option("table", "supplier").load()
-    val part = dfReader.option("table", "part").load()
+    val customer = dfReader.options(getTableOptions("customer")).load()
+    val order = dfReader.options(getTableOptions("order")).load()
+    val lineitem = dfReader.options(getTableOptions("lineitem")).load()
+    val region = dfReader.options(getTableOptions("region", ("useSmallMemory" -> "true"))).load()
+    val nation = dfReader.options(getTableOptions("nation", ("useSmallMemory" -> "true"))).load()
+    val supplier = dfReader.options(getTableOptions("supplier")).load()
+    val part = dfReader.options(getTableOptions("part")).load()
 
     val getYear = udf { (x: String) => x.substring(0, 4) }
     val decrease = udf { (x: Double, y: Double) => x * (1 - y) }

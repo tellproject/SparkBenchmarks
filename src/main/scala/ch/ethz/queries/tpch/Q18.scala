@@ -15,9 +15,9 @@ class Q18 extends BenchmarkQuery {
     import org.apache.spark.sql.functions._
     import sqlCxt.implicits._
 
-    val customer = dfReader.option("table", "customer").load()
-    val order = dfReader.option("table", "order").load()
-    val lineitem = dfReader.option("table", "lineitem").load()
+    val customer = dfReader.options(getTableOptions("customer")).load()
+    val order = dfReader.options(getTableOptions("order")).load()
+    val lineitem = dfReader.options(getTableOptions("lineitem")).load()
 
     lineitem.groupBy($"l_orderkey")
       .agg(sum($"l_quantity").as("sum_quantity"))

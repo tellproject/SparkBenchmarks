@@ -4,10 +4,10 @@ import ch.ethz.queries.BenchmarkQuery
 import org.apache.spark.sql.{DataFrame, DataFrameReader, SQLContext}
 
 /**
- * TPC-H Query 3
- * Savvas Savvides <ssavvides@us.ibm.com>
- *
- */
+  * TPC-H Query 3
+  * Savvas Savvides <ssavvides@us.ibm.com>
+  *
+  */
 class Q3 extends BenchmarkQuery {
 
   override def executeQuery(sqlCxt: SQLContext, dfReader: DataFrameReader): DataFrame = {

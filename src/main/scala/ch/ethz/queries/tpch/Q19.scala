@@ -15,8 +15,8 @@ class Q19 extends BenchmarkQuery {
     import org.apache.spark.sql.functions._
     import sqlCxt.implicits._
 
-    val lineitem = dfReader.option("table", "lineitem").load()
-    val part = dfReader.option("table", "part").load()
+    val lineitem = dfReader.options(getTableOptions("lineitem")).load()
+    val part = dfReader.options(getTableOptions("part")).load()
 
     val sm = udf { (x: String) => x.matches("SM CASE|SM BOX|SM PACK|SM PKG") }
     val md = udf { (x: String) => x.matches("MED BAG|MED BOX|MED PKG|MED PACK") }

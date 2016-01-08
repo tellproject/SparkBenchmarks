@@ -15,7 +15,7 @@ class Q6 extends BenchmarkQuery {
     import org.apache.spark.sql.functions._
     import sqlCxt.implicits._
 
-    val lineitem = dfReader.option("table", "lineitem").load()
+    val lineitem = dfReader.options(getTableOptions("lineitem")).load()
 
     lineitem.filter($"l_shipdate" >= "1994-01-01" && $"l_shipdate" < "1995-01-01"
       && $"l_discount" >= 0.05 && $"l_discount" <= 0.07

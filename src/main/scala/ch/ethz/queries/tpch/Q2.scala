@@ -16,7 +16,7 @@ class Q2 extends BenchmarkQuery {
     import sqlCxt.implicits._
 
     val nation = dfReader.options(getTableOptions("nation", ("useSmallMemory" -> "true"))).load()
-    val region = dfReader.options(getTableOptions("nation", ("useSmallMemory" -> "true"))).load()
+    val region = dfReader.options(getTableOptions("region", ("useSmallMemory" -> "true"))).load()
     val supplier = dfReader.options(getTableOptions("supplier")).load()
     val partsupp = dfReader.options(getTableOptions("partsupp")).load()
     val part = dfReader.options(getTableOptions("part")).load()

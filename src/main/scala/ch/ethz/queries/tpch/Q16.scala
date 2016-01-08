@@ -15,9 +15,9 @@ class Q16 extends BenchmarkQuery {
     import org.apache.spark.sql.functions._
     import sqlCxt.implicits._
 
-    val supplier = dfReader.option("table", "supplier").load()
-    val partsupp = dfReader.option("table", "partsupp").load()
-    val part = dfReader.option("table", "part").load()
+    val supplier = dfReader.options(getTableOptions("supplier")).load()
+    val partsupp = dfReader.options(getTableOptions("partsupp")).load()
+    val part = dfReader.options(getTableOptions("part")).load()
 
     val decrease = udf { (x: Double, y: Double) => x * (1 - y) }
     val complains = udf { (x: String) => x.matches(".*Customer.*Complaints.*") }

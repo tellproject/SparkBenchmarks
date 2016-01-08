@@ -15,8 +15,8 @@ class Q4 extends BenchmarkQuery {
     import org.apache.spark.sql.functions._
     import sqlCxt.implicits._
 
-    val order = dfReader.option("table", "order").load()
-    val lineitem = dfReader.option("table", "lineitem").load()
+    val order = dfReader.options(getTableOptions("order")).load()
+    val lineitem = dfReader.options(getTableOptions("lineitem")).load()
 
     val forders = order.filter($"o_orderdate" >= "1993-07-01" && $"o_orderdate" < "1993-10-01")
     val flineitems = lineitem.filter($"l_commitdate" < $"l_receiptdate")

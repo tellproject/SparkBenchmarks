@@ -4,10 +4,10 @@ import ch.ethz.queries.BenchmarkQuery
 import org.apache.spark.sql.{DataFrame, DataFrameReader, SQLContext}
 
 /**
- * TPC-H Query 12
- * Savvas Savvides <ssavvides@us.ibm.com>
- *
- */
+  * TPC-H Query 12
+  * Savvas Savvides <ssavvides@us.ibm.com>
+  *
+  */
 class Q12 extends BenchmarkQuery {
 
   override def executeQuery(sqlCxt: SQLContext, dfReader: DataFrameReader): DataFrame = {
@@ -15,8 +15,8 @@ class Q12 extends BenchmarkQuery {
     import org.apache.spark.sql.functions._
     import sqlCxt.implicits._
 
-    val order = dfReader.option("table", "order").load()
-    val lineitem = dfReader.option("table", "lineitem").load()
+    val order = dfReader.options(getTableOptions("order")).load()
+    val lineitem = dfReader.options(getTableOptions("lineitem")).load()
 
     val mul = udf { (x: Double, y: Double) => x * y }
     val highPriority = udf { (x: String) => if (x == "1-URGENT" || x == "2-HIGH") 1 else 0 }

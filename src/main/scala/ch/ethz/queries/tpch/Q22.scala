@@ -15,8 +15,14 @@ class Q22 extends BenchmarkQuery {
     import org.apache.spark.sql.functions._
     import sqlCxt.implicits._
 
-    val customer = dfReader.option("table", "customer").load()
-    val order = dfReader.option("table", "order").load()
+    val customer = dfReader.options(getTableOptions("customer")).load()
+    val order = dfReader.options(getTableOptions("order")).load()
+    //    val lineitem = dfReader.options(getTableOptions("lineitem")).load()
+    //        val region = dfReader.options(getTableOptions("region", ("useSmallMemory" -> "true"))).load()
+    //    val nation = dfReader.options(getTableOptions("nation", ("useSmallMemory" -> "true"))).load()
+    //    val supplier = dfReader.options(getTableOptions("supplier")).load()
+    //    val partsupp = dfReader.options(getTableOptions("partsupp")).load()
+    //    val part = dfReader.options(getTableOptions("part")).load()
 
     val sub2 = udf { (x: String) => x.substring(0, 2) }
     val phone = udf { (x: String) => x.matches("13|31|23|29|30|18|17") }

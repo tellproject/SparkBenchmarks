@@ -15,8 +15,8 @@ class Q14 extends BenchmarkQuery {
     import org.apache.spark.sql.functions._
     import sqlCxt.implicits._
 
-    val lineitem = dfReader.option("table", "lineitem").load()
-    val part = dfReader.option("table", "part").load()
+    val lineitem = dfReader.options(getTableOptions("lineitem")).load()
+    val part = dfReader.options(getTableOptions("part")).load()
 
     val reduce = udf { (x: Double, y: Double) => x * (1 - y) }
     val promo = udf { (x: String, y: Double) => if (x.startsWith("PROMO")) y else 0 }

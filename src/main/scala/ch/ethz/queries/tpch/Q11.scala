@@ -15,9 +15,9 @@ class Q11 extends BenchmarkQuery {
     import org.apache.spark.sql.functions._
     import sqlCxt.implicits._
 
-    val nation = dfReader.option("table", "nation").option("useSmallMemory", "true").load()
-    val supplier = dfReader.option("table", "supplier").load()
-    val partsupp = dfReader.option("table", "partsupp").load()
+    val nation = dfReader.options(getTableOptions("nation", ("useSmallMemory" -> "true"))).load()
+    val supplier = dfReader.options(getTableOptions("supplier")).load()
+    val partsupp = dfReader.options(getTableOptions("partsupp")).load()
 
     val mul = udf { (x: Double, y: Int) => x * y }
     val mul01 = udf { (x: Double) => x * 0.0001 }

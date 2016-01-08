@@ -15,8 +15,8 @@ class Q17 extends BenchmarkQuery {
     import org.apache.spark.sql.functions._
     import sqlCxt.implicits._
 
-    val lineitem = dfReader.option("table", "lineitem").load()
-    val part = dfReader.option("table", "part").load()
+    val lineitem = dfReader.options(getTableOptions("lineitem")).load()
+    val part = dfReader.options(getTableOptions("part")).load()
 
     val mul02 = udf { (x: Double) => x * 0.2 }
 
