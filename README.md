@@ -18,6 +18,20 @@ For 2:
 Then you can get your assembly the usual way:
 * sbt clean assembly
 
+## Setting parameters
+
+* spark.executor.extraJavaOptions    -Djava.library.path=/mnt/local/marenato/tellbuild/telljava
+* spark.executor.extraLibraryPath    /mnt/local/marenato/tellbuild/telljava
+* spark.executorEnv.LD_LIBRARY_PATH  /mnt/local/marenato/tellbuild/telljava
+* spark.sql.tell.commitmanager       euler10:7242
+* spark.sql.tell.storagemanager      euler10:7241;euler11:7241
+* spark.driver.extraClassPath        /mnt/local/marenato/tellbuild/telljava/telljava-1.0.jar
+* spark.executor.extraClassPath      /mnt/local/marenato/tellbuild/telljava/telljava-1.0.jar
+* spark.sql.kudu.master              euler10:XX
+* spark.sql.tell.chunkSizeSmall      1073741824
+* spark.sql.tell.chunkSizeBig        2073741824 #accounts for ~2gb
+* For the shared library you need in master and slaves: <br> ```export LD_LIBRARY_PATH=PATH_TO_TELLBUILD_TELLJAVA```
+
 ## For running it
 The uber jar created from steps before is: ```StorageEngBenchmark.jar```
 
