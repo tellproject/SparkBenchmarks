@@ -27,20 +27,21 @@ object QueryRunner extends Logging {
 
     val sc = new SparkContext(conf)
 
-    val i: Int = 1
-    val query = Class.forName(f"ch.ethz.queries.${benchmark}.Q${i}%d").newInstance.asInstanceOf[BenchmarkQuery]
-    query.storageType = strEngine
+    (1 to 22).map(i => {
+      val query = Class.forName(f"ch.ethz.queries.${benchmark}.Q${i}%d").newInstance.asInstanceOf[BenchmarkQuery]
+      query.storageType = strEngine
 
-    logInfo(s"Running query ${i}")
-    val start = System.nanoTime()
+      logInfo(s"Running query ${i}")
+      val start = System.nanoTime()
 
-    val sqlApiEntry = initializeExec(sc, strEngine)
-    val data = query.executeQuery(sqlApiEntry)
-    data.show(100)
-    finalizeExec(sqlApiEntry, strEngine)
+      val sqlApiEntry = initializeExec(sc, strEngine)
+      val data = query.executeQuery(sqlApiEntry)
+      data.show(100)
+      finalizeExec(sqlApiEntry, strEngine)
 
-    val end = System.nanoTime()
-    logInfo(s"Running query ${i} took ${(end - start) / 1000000}ms")
+      val end = System.nanoTime()
+      logInfo(s"Running query ${i} took ${(end - start) / 1000000}ms")
+    })
   }
 
   def initializeExec(sc: SparkContext, st: StorageEngine.Value): (SQLContext, DataFrameReader) = {
