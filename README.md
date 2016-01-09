@@ -17,3 +17,13 @@ For 2:
 
 Then you can get your assembly the usual way:
 * sbt clean assembly
+
+## For running it
+The uber jar created from steps before is: ```StorageEngBenchmark.jar```
+
+* Start spark master: ```PATH_TO_SPARK/sbin/start-master.sh```
+* Start spark slave(s): ```PATH_TO_SPARK/sbin/start-slave.sh spark://MASTER_IP:7077```
+* Submit the job:
+<br>```PATH_TO_SPARK/bin/spark-submit --class ch.ethz.QueryRunner --master spark://euler10:7077 /home/marenato/StorageEngBenchmark.jar tell chb```
+* Options for storage backend: ```tell``` for TellStore, ```kudu``` for Kudu
+* Options for benchmark: ```chb``` for CH benchmark, ```tpch``` for TPCH benchmark
