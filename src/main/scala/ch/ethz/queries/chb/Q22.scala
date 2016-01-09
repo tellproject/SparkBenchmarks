@@ -30,7 +30,7 @@ class Q22 extends BenchmarkQuery {
 
     import org.apache.spark.sql.functions._
     import sqlCxt.implicits._
-    
+
     val customer = dfReader.options(getTableOptions("customer")).load()
     val orders = dfReader.options(getTableOptions("order")).load()
 
