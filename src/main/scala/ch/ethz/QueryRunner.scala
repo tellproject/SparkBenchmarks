@@ -49,7 +49,7 @@ object QueryRunner extends Logging {
     st match {
       case StorageEngine.TELL => {
         val tellCxt = new TellContext(sc)
-        dfReader = tellCxt.read.format("tell").option("numPartitions", "8")
+        dfReader = tellCxt.read.format("ch.ethz.tell").option("numPartitions", "8")
         tellCxt.startTransaction()
         sqlCxt = tellCxt
       }
