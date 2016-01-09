@@ -1,4 +1,4 @@
-package ch.ch.ethz.queries.chb
+package ch.ethz.queries.chb
 
 import ch.ethz.queries.BenchmarkQuery
 import org.apache.spark.sql.functions._

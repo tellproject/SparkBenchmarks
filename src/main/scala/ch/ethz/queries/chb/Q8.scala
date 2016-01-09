@@ -1,4 +1,4 @@
-package ch.ch.ethz.queries.chb
+package ch.ethz.queries.chb
 
 import java.time.Instant
 
