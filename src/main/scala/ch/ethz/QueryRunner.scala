@@ -23,11 +23,11 @@ object QueryRunner extends Logging {
     val benchmark = args(1)
 
     val conf = new SparkConf()
-    conf.set("spark.sql.tell.chunkSizeBig", (2L * 1024L * 1024L * 1024L).toString)
+    //conf.set("spark.sql.tell.chunkSizeBig", (2L * 1024L * 1024L * 1024L).toString)
 
     val sc = new SparkContext(conf)
 
-    (1 to 22).map(i => {
+    (2 to 2).map(i => {
       val query = Class.forName(f"ch.ethz.queries.${benchmark}.Q${i}%d").newInstance.asInstanceOf[BenchmarkQuery]
       query.storageType = strEngine
 
@@ -36,11 +36,12 @@ object QueryRunner extends Logging {
 
       val sqlApiEntry = initializeExec(sc, strEngine)
       val data = query.executeQuery(sqlApiEntry)
-      data.show(100)
+   //   data.show(100)
+      data.count()
       finalizeExec(sqlApiEntry, strEngine)
 
       val end = System.nanoTime()
-      logInfo(s"Running query ${i} took ${(end - start) / 1000000}ms")
+      logWarning(s"Running query ${i} took ${(end - start) / 1000000}ms")
     })
   }
 
