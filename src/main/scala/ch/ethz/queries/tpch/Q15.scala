@@ -21,8 +21,8 @@ class Q15 extends BenchmarkQuery {
 
     val decrease = udf { (x: Double, y: Double) => x * (1 - y) }
 
-    val revenue = lineitem.filter($"l_shipdate" >= "1996-01-01" &&
-      $"l_shipdate" < "1996-04-01")
+    val revenue = lineitem.filter($"l_shipdate" >= referenceDate19960101 &&
+      $"l_shipdate" < referenceDate19960401)
       .select($"l_suppkey", decrease($"l_extendedprice", $"l_discount").as("value"))
       .groupBy($"l_suppkey")
       .agg(sum($"value").as("total"))

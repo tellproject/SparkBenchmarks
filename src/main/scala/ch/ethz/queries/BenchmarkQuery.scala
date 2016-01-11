@@ -14,6 +14,36 @@ class BenchmarkQuery {
   // have the reference date as it appears in many places
   val calendar = Calendar.getInstance()
 
+  val referenceDate1994: Long = {
+    calendar.set(1994, 1, 1)
+    calendar.getTimeInMillis * 1000L * 1000L // create nano seconds
+  }
+
+  val referenceDate19960401: Long = {
+    calendar.set(1996, 4, 1)
+    calendar.getTimeInMillis * 1000L * 1000L // create nano seconds
+  }
+
+  val referenceDate19960101: Long = {
+    calendar.set(1996, 1, 1)
+    calendar.getTimeInMillis * 1000L * 1000L // create nano seconds
+  }
+
+  val referenceDate19951001: Long = {
+    calendar.set(1995, 10, 1)
+    calendar.getTimeInMillis * 1000L * 1000L // create nano seconds
+  }
+
+  val referenceDate1995: Long = {
+    calendar.set(1995, 1, 1)
+    calendar.getTimeInMillis * 1000L * 1000L // create nano seconds
+  }
+
+  val referenceDate1993: Long = {
+    calendar.set(1993, 10, 1)
+    calendar.getTimeInMillis * 1000L * 1000L // create nano seconds
+  }
+
   val referenceDate1999: Long = {
     calendar.set(1999, 1, 1)
     calendar.getTimeInMillis * 1000L * 1000L // create nano seconds
