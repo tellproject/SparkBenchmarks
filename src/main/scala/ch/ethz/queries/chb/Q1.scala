@@ -18,6 +18,7 @@ class Q1 extends BenchmarkQuery {
     import org.apache.spark.sql.functions._
 
     val orderline = dfReader.options(getTableOptions("order-line")).load()
+    orderline
 
     orderline
       .filter(orderline("ol_delivery_d") > referenceDate2007)

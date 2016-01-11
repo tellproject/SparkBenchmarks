@@ -26,7 +26,7 @@ class Q12 extends BenchmarkQuery {
       $"l_shipmode" === "MAIL" || $"l_shipmode" === "SHIP") &&
       $"l_commitdate" < $"l_receiptdate" &&
       $"l_shipdate" < $"l_commitdate" &&
-      $"l_receiptdate" >= "1994-01-01" && $"l_receiptdate" < referenceDate1995)
+      $"l_receiptdate" >= referenceDate1994 && $"l_receiptdate" < referenceDate1995)
       .join(order, $"l_orderkey" === order("o_orderkey"))
       .select($"l_shipmode", $"o_orderpriority")
       .groupBy($"l_shipmode")

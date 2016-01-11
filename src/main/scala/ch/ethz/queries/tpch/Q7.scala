@@ -26,7 +26,7 @@ class Q7 extends BenchmarkQuery {
 
     // cache fnation
     val fnation = nation.filter($"n_name" === "FRANCE" || $"n_name" === "GERMANY")
-    val fline = lineitem.filter($"l_shipdate" >= "1995-01-01" && $"l_shipdate" <= "1996-12-31")
+    val fline = lineitem.filter($"l_shipdate" >= referenceDate1995 && $"l_shipdate" <= referenceDate19961231)
 
     val supNation = fnation.join(supplier, $"n_nationkey" === supplier("s_nationkey"))
       .join(fline, $"s_suppkey" === fline("l_suppkey"))

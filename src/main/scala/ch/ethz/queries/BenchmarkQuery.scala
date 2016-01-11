@@ -34,8 +34,33 @@ class BenchmarkQuery {
     calendar.getTimeInMillis
   }
 
+  val referenceDate19950901: Long = {
+    calendar.set(1995, 9, 1)
+    calendar.getTimeInMillis
+  }
+
+  val referenceDate19961231: Long = {
+    calendar.set(1996, 12, 31)
+    calendar.getTimeInMillis
+  }
+
   val referenceDate1995: Long = {
     calendar.set(1995, 1, 1)
+    calendar.getTimeInMillis
+  }
+
+  val referenceDate19980902: Long = {
+    calendar.set(1998, 9, 2)
+    calendar.getTimeInMillis
+  }
+
+  val referenceDate19930315: Long = {
+    calendar.set(1993, 3, 15)
+    calendar.getTimeInMillis
+  }
+
+  val referenceDate19930701: Long = {
+    calendar.set(1993, 7, 1)
     calendar.getTimeInMillis
   }
 

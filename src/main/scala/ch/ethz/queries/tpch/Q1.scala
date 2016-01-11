@@ -21,7 +21,7 @@ override def executeQuery(sqlCxt: SQLContext, dfReader: DataFrameReader): DataFr
 
     val lineitem = dfReader.options(getTableOptions("lineitem")).load()
 
-    lineitem.filter($"l_shipdate" <= "1998-09-02")
+    lineitem.filter($"l_shipdate" <= referenceDate19980902)
       .groupBy($"l_returnflag", $"l_linestatus")
       .agg(sum($"l_quantity"), sum($"l_extendedprice"),
         sum(decrease($"l_extendedprice", $"l_discount")),

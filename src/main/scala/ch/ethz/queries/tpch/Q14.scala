@@ -22,7 +22,8 @@ class Q14 extends BenchmarkQuery {
     val promo = udf { (x: String, y: Double) => if (x.startsWith("PROMO")) y else 0 }
 
     part.join(lineitem, $"l_partkey" === $"p_partkey" &&
-      $"l_shipdate" >= "1995-09-01" && $"l_shipdate" < referenceDate19951001)
+
+      $"l_shipdate" >= referenceDate19950901 && $"l_shipdate" < referenceDate19951001)
       .select($"p_type", reduce($"l_extendedprice", $"l_discount").as("value"))
       .agg(sum(promo($"p_type", $"value")) * 100 / sum($"value"))
 

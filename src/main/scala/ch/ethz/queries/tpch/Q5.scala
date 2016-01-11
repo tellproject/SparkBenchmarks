@@ -24,7 +24,7 @@ class Q5 extends BenchmarkQuery {
 
     val decrease = udf { (x: Double, y: Double) => x * (1 - y) }
 
-    val forders = order.filter($"o_orderdate" < "1995-01-01" && $"o_orderdate" >= "1994-01-01")
+    val forders = order.filter($"o_orderdate" < referenceDate1995 && $"o_orderdate" >= referenceDate1994)
 
     region.filter($"r_name" === "ASIA")
       .join(nation, $"r_regionkey" === nation("n_regionkey"))

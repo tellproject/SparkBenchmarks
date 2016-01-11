@@ -18,7 +18,7 @@ class Q4 extends BenchmarkQuery {
     val order = dfReader.options(getTableOptions("orders")).load()
     val lineitem = dfReader.options(getTableOptions("lineitem")).load()
 
-    val forders = order.filter($"o_orderdate" >= "1993-07-01" && $"o_orderdate" < "1993-10-01")
+    val forders = order.filter($"o_orderdate" >= referenceDate19930701 && $"o_orderdate" < referenceDate1993)
     val flineitems = lineitem.filter($"l_commitdate" < $"l_receiptdate")
       .select($"l_orderkey")
       .distinct
