@@ -16,7 +16,7 @@ class Q13 extends BenchmarkQuery {
     import sqlCxt.implicits._
 
     val customer = dfReader.options(getTableOptions("customer")).load()
-    val order = dfReader.options(getTableOptions("order")).load()
+    val order = dfReader.options(getTableOptions("orders")).load()
 
     val special = udf { (x: String) => x.matches(".*special.*requests.*") }
 

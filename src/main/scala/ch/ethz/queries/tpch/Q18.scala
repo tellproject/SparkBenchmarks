@@ -16,7 +16,7 @@ class Q18 extends BenchmarkQuery {
     import sqlCxt.implicits._
 
     val customer = dfReader.options(getTableOptions("customer")).load()
-    val order = dfReader.options(getTableOptions("order")).load()
+    val order = dfReader.options(getTableOptions("orders")).load()
     val lineitem = dfReader.options(getTableOptions("lineitem")).load()
 
     lineitem.groupBy($"l_orderkey")
