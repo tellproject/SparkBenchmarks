@@ -14,20 +14,23 @@ object StorageEngine extends Enumeration {
 object QueryRunner extends Logging {
 
   def main(args: Array[String]): Unit = {
-    if (args.length != 2) {
+    if (args.length < 2) {
       println("Specify storage engine, then benchmark")
       println("\t <kudu|tell|hdfs> <chb|tpch>")
       return
     }
+    var nQueries = 22
     val strEngine = StorageEngine.withName(args(0))
     val benchmark = args(1)
+    if (args.length == 3)
+      nQueries = args(2).toInt
 
     val conf = new SparkConf()
     //conf.set("spark.sql.tell.chunkSizeBig", (2L * 1024L * 1024L * 1024L).toString)
 
     val sc = new SparkContext(conf)
 
-    (2 to 2).map(i => {
+    (1 to nQueries).map(i => {
       val query = Class.forName(f"ch.ethz.queries.${benchmark}.Q${i}%d").newInstance.asInstanceOf[BenchmarkQuery]
       query.storageType = strEngine
 
