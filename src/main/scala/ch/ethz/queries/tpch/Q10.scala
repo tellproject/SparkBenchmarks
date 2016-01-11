@@ -19,7 +19,7 @@ class Q10 extends BenchmarkQuery {
     import sqlCxt.implicits._
 
     val customer = dfReader.options(getTableOptions("customer")).load()
-    val order = dfReader.options(getTableOptions("order")).load()
+    val order = dfReader.options(getTableOptions("orders")).load()
     val lineitem = dfReader.options(getTableOptions("lineitem")).load()
     val nation = dfReader.options(getTableOptions("nation", ("useSmallMemory" -> "true"))).load()
 
