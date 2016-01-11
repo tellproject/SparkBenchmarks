@@ -23,7 +23,7 @@ class Q20 extends BenchmarkQuery {
 
     val forest = udf { (x: String) => x.startsWith("forest") }
 
-    val flineitem = lineitem.filter($"l_shipdate" >= "1994-01-01" && $"l_shipdate" < "1995-01-01")
+    val flineitem = lineitem.filter($"l_shipdate" >= referenceDate1994 && $"l_shipdate" < referenceDate1995)
       .groupBy($"l_partkey", $"l_suppkey")
       .agg((sum($"l_quantity") * 0.5).as("sum_quantity"))
 
