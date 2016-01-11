@@ -16,62 +16,62 @@ class BenchmarkQuery {
 
   val referenceDate1994: Long = {
     calendar.set(1994, 1, 1)
-    calendar.getTimeInMillis * 1000L * 1000L // create nano seconds
+    calendar.getTimeInMillis
   }
 
   val referenceDate19960401: Long = {
     calendar.set(1996, 4, 1)
-    calendar.getTimeInMillis * 1000L * 1000L // create nano seconds
+    calendar.getTimeInMillis
   }
 
   val referenceDate19960101: Long = {
     calendar.set(1996, 1, 1)
-    calendar.getTimeInMillis * 1000L * 1000L // create nano seconds
+    calendar.getTimeInMillis
   }
 
   val referenceDate19951001: Long = {
     calendar.set(1995, 10, 1)
-    calendar.getTimeInMillis * 1000L * 1000L // create nano seconds
+    calendar.getTimeInMillis
   }
 
   val referenceDate1995: Long = {
     calendar.set(1995, 1, 1)
-    calendar.getTimeInMillis * 1000L * 1000L // create nano seconds
+    calendar.getTimeInMillis
   }
 
   val referenceDate1993: Long = {
     calendar.set(1993, 10, 1)
-    calendar.getTimeInMillis * 1000L * 1000L // create nano seconds
+    calendar.getTimeInMillis
   }
 
   val referenceDate1999: Long = {
     calendar.set(1999, 1, 1)
-    calendar.getTimeInMillis * 1000L * 1000L // create nano seconds
+    calendar.getTimeInMillis
   }
 
   val referenceDate2007: Long = {
     calendar.set(2007, 1, 2)
-    calendar.getTimeInMillis * 1000L * 1000L // create nano seconds
+    calendar.getTimeInMillis
   }
 
   val referenceDate2010: Long = {
     calendar.set(2010, 5, 23, 12, 0)
-    calendar.getTimeInMillis * 1000L * 1000L // create nano seconds
+    calendar.getTimeInMillis
   }
 
   val referenceDate2012: Long = {
     calendar.set(2012, 1, 2)
-    calendar.getTimeInMillis * 1000L * 1000L // create nano seconds
+    calendar.getTimeInMillis
   }
 
   val referenceDate2020First: Long = {
     calendar.set(2020, 1, 1)
-    calendar.getTimeInMillis * 1000L * 1000L // create nano seconds
+    calendar.getTimeInMillis
   }
 
   val referenceDate2020Second: Long = {
     calendar.set(2020, 1, 2)
-    calendar.getTimeInMillis * 1000L * 1000L // create nano seconds
+    calendar.getTimeInMillis
   }
 
   /**
