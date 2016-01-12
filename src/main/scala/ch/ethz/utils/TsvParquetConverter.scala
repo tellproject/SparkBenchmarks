@@ -26,9 +26,9 @@ case class Lineitem(
                      l_tax: Double,
                      l_returnflag: String,
                      l_linestatus: String,
-//                     l_shipdate: String,
-//                     l_commitdate: String,
-//                     l_receiptdate: String,
+                     //                     l_shipdate: String,
+                     //                     l_commitdate: String,
+                     //                     l_receiptdate: String,
                      l_shipdate: Long,
                      l_commitdate: Long,
                      l_receiptdate: Long,
@@ -47,7 +47,7 @@ case class Order(
                   o_custkey: Int,
                   o_orderstatus: String,
                   o_totalprice: Double,
-//                  o_orderdate: String,
+                  //                  o_orderdate: String,
                   o_orderdate: Long,
                   o_orderpriority: String,
                   o_clerk: String,
@@ -123,14 +123,14 @@ object TsvParquetConverter {
       val supplier = sc.textFile(inputDir + "/supplier.tbl").map(_.split('|')).map(p => Supplier(p(0).trim.toInt, p(1).trim, p(2).trim, p(3).trim.toInt, p(4).trim, p(5).trim.toDouble, p(6).trim)).toDF()
 
       if (Files.exists(Paths.get(outputPath))) {
-        customer.write.parquet(outputPath+"/customer.parquet")
-        lineitem.write.parquet(outputPath+"/lineitem.parquet")
-        nation.write.parquet(outputPath+"/nation.parquet")
-        region.write.parquet(outputPath+"/region.parquet")
-        order.write.parquet(outputPath+"/order.parquet")
-        part.write.parquet(outputPath+"/part.parquet")
-        partsupp.write.parquet(outputPath+"/partsupp.parquet")
-        supplier.write.parquet(outputPath+"/supplier.parquet")
+        customer.write.parquet(outputPath + "/customer.parquet")
+        lineitem.write.parquet(outputPath + "/lineitem.parquet")
+        nation.write.parquet(outputPath + "/nation.parquet")
+        region.write.parquet(outputPath + "/region.parquet")
+        order.write.parquet(outputPath + "/order.parquet")
+        part.write.parquet(outputPath + "/part.parquet")
+        partsupp.write.parquet(outputPath + "/partsupp.parquet")
+        supplier.write.parquet(outputPath + "/supplier.parquet")
       }
       println("Doing sanity check")
       val dfReader = sqlCxt.read.format("parquet")

@@ -6,7 +6,8 @@ object DateConverter {
 
   def dateToLong(dateString: String): Long = {
     val calendar = Calendar.getInstance()
-    dateString.split('-').map(p => calendar.set(p(0).toInt, p(1).toInt, p(2).toInt))
+    val dd = dateString.split('-')
+    calendar.set(dd(0).toInt, dd(1).toInt, dd(2).toInt)
     calendar.getTimeInMillis
   }
 
