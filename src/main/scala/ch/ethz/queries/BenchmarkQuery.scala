@@ -10,6 +10,7 @@ class BenchmarkQuery {
 
   // have the storage type to know how to query
   var storageType:StorageEngine.Value = null
+  val inputPath:String = ""
 
   // have the reference date as it appears in many places
   val calendar = Calendar.getInstance()
@@ -113,6 +114,9 @@ class BenchmarkQuery {
       }
       case StorageEngine.KUDU => {
         options += ("kudu.table" -> tabName)
+      }
+      case StorageEngine.PARQUET => {
+        options += ("path" -> (inputPath + tabName + ".parquet"))
       }
       case _ => throw new IllegalArgumentException(s"Storage type not supported: ${storageType.toString}")
     }

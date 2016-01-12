@@ -8,7 +8,7 @@ import org.apache.spark.{SparkContext, SparkConf, Logging}
 object StorageEngine extends Enumeration {
   val KUDU = Value("kudu")
   val TELL = Value("tell")
-  val HDFS = Value("hdfs")
+  val PARQUET = Value("parquet")
 }
 
 object QueryRunner extends Logging {
@@ -16,19 +16,33 @@ object QueryRunner extends Logging {
   def main(args: Array[String]): Unit = {
     if (args.length < 2) {
       println("Specify storage engine, then benchmark")
-      println("\t <kudu|tell|hdfs> <chb|tpch>")
+      println("\t <kudu|tell|parquet> <chb|tpch> <limitQuery> <inputPath>")
       return
     }
     var nQueries = 22
     val strEngine = StorageEngine.withName(args(0))
     val benchmark = args(1)
+    var parquetInputPath = ""
     if (args.length == 3)
       nQueries = args(2).toInt
+    if (strEngine.equals(StorageEngine.PARQUET)) {
+      if (args.length == 4)
+        parquetInputPath = args(3)
+      else
+        println("Input path required for Parquet file")
+    }
 
     val conf = new SparkConf()
     //conf.set("spark.sql.tell.chunkSizeBig", (2L * 1024L * 1024L * 1024L).toString)
 
     val sc = new SparkContext(conf)
+
+    logWarning("Starting warm up query.")
+    val query = Class.forName(f"ch.ethz.queries.${benchmark}.Q1").newInstance.asInstanceOf[BenchmarkQuery]
+    query.storageType = strEngine
+    val sqlApiEntry = initializeExec(sc, strEngine)
+    query.executeQuery(sqlApiEntry).count
+    logWarning("Finished warm up query.")
 
     (1 to nQueries).map(i => {
       val query = Class.forName(f"ch.ethz.queries.${benchmark}.Q${i}%d").newInstance.asInstanceOf[BenchmarkQuery]
@@ -54,7 +68,7 @@ object QueryRunner extends Logging {
     st match {
       case StorageEngine.TELL => {
         val tellCxt = new TellContext(sc)
-        dfReader = tellCxt.read.format("ch.ethz.tell").option("numPartitions", "8")
+        dfReader = tellCxt.read.format("ch.ethz.tell")
         tellCxt.startTransaction()
         sqlCxt = tellCxt
       }
@@ -63,13 +77,14 @@ object QueryRunner extends Logging {
         val kuduMaster = sc.getConf.get("spark.sql.kudu.master")
         dfReader = sqlCxt.read.format("org.kududb.spark").option("kudu.master", kuduMaster)
       }
-      case StorageEngine.HDFS => {
-        //TODO read parquet files
+      case StorageEngine.PARQUET => {
         sqlCxt = new SQLContext(sc)
-        throw new IllegalArgumentException(s"Storage engine not supported: ${st}")
+        dfReader = sqlCxt.read.format("parquet")
       }
       case _ => throw new IllegalArgumentException(s"Storage engine not supported: ${st}")
     }
+    // repartitioning for 8 number of cores
+    dfReader.option("numPartitions", "8")
     (sqlCxt, dfReader)
   }
 
