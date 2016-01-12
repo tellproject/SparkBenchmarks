@@ -15,6 +15,9 @@ class Q3 extends BenchmarkQuery {
     import org.apache.spark.sql.functions._
     import sqlCxt.implicits._
 
+    sqlCxt.dropTempTable("lineitem")  // make sure we do not used a table ached from Q1
+
+
     val customer = dfReader.options(getTableOptions("customer")).load()
     val order = dfReader.options(getTableOptions("orders")).load()
     val lineitem = dfReader.options(getTableOptions("lineitem")).load()
