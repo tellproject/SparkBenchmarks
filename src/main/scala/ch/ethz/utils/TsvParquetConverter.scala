@@ -127,14 +127,14 @@ object TsvParquetConverter {
         lineitem.write.parquet(outputPath + "/lineitem.parquet")
         nation.write.parquet(outputPath + "/nation.parquet")
         region.write.parquet(outputPath + "/region.parquet")
-        order.write.parquet(outputPath + "/order.parquet")
+        order.write.parquet(outputPath + "/orders.parquet")
         part.write.parquet(outputPath + "/part.parquet")
         partsupp.write.parquet(outputPath + "/partsupp.parquet")
         supplier.write.parquet(outputPath + "/supplier.parquet")
       }
       println("Doing sanity check")
       val dfReader = sqlCxt.read.format("parquet")
-      val cc = dfReader.option("path", outputPath + "nation.parquet").load()
+      val cc = dfReader.option("path", outputPath + "/nation.parquet").load()
       cc.show(10)
     } else {
       println(s"Input path does not exist ${inputDir}")
