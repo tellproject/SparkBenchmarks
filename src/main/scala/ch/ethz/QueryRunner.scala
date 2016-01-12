@@ -40,6 +40,7 @@ object QueryRunner extends Logging {
     logWarning("Starting warm up query.")
     val query = Class.forName(f"ch.ethz.queries.${benchmark}.Q1").newInstance.asInstanceOf[BenchmarkQuery]
     query.storageType = strEngine
+    query.inputPath = parquetInputPath
     val sqlApiEntry = initializeExec(sc, strEngine)
     query.executeQuery(sqlApiEntry).count
     logWarning("Finished warm up query.")
@@ -47,6 +48,7 @@ object QueryRunner extends Logging {
     (1 to nQueries).map(i => {
       val query = Class.forName(f"ch.ethz.queries.${benchmark}.Q${i}%d").newInstance.asInstanceOf[BenchmarkQuery]
       query.storageType = strEngine
+      query.inputPath = parquetInputPath
 
       logInfo(s"Running query ${i}")
       val start = System.nanoTime()

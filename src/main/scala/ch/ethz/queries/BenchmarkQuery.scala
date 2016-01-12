@@ -10,7 +10,7 @@ class BenchmarkQuery {
 
   // have the storage type to know how to query
   var storageType:StorageEngine.Value = null
-  val inputPath:String = ""
+  var inputPath:String = ""
 
   // have the reference date as it appears in many places
   val calendar = Calendar.getInstance()
