@@ -128,6 +128,10 @@ object TsvParquetConverter {
         partsupp.write.parquet(outputPath+"/partsupp.parquet")
         supplier.write.parquet(outputPath+"/supplier.parquet")
       }
+      println("Doing sanity check")
+      val dfReader = sqlCxt.read.format("parquet")
+      val cc = dfReader.option("path", outputPath + "nation.parquet").load()
+      cc.show(10)
     } else {
       println(s"Input path does not exist ${inputDir}")
     }
