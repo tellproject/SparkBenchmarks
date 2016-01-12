@@ -40,11 +40,11 @@ object QueryRunner extends Logging {
       val sqlApiEntry = initializeExec(sc, strEngine)
       val data = query.executeQuery(sqlApiEntry)
    //   data.show(100)
-      data.count()
+      val cnt = data.count()
       finalizeExec(sqlApiEntry, strEngine)
 
       val end = System.nanoTime()
-      logWarning(s"Running query ${i} took ${(end - start) / 1000000}ms")
+      logWarning(s"Running query ${i} took ${(end - start) / 1000000}ms and produced ${cnt} tuples.")
     })
   }
 
