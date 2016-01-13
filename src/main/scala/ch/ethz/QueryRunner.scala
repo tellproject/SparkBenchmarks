@@ -56,7 +56,10 @@ object QueryRunner extends Logging {
 
       val sqlApiEntry = initializeExec(sc, strEngine)
       val data = query.executeQuery(sqlApiEntry)
-      //   data.show(100)
+      // logWarning("Started dhowing data")
+      // data.limit(10).collect().map(r => logWarning(s"[P] ${r.toString()}"))
+      // logWarning("Finished showing data")
+      // data.show(10)
       val cnt = data.count()
       finalizeExec(sqlApiEntry, strEngine)
 
