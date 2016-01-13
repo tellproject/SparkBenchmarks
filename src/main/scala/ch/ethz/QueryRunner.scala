@@ -45,7 +45,8 @@ object QueryRunner extends Logging {
     query.executeQuery(sqlApiEntry).count
     logWarning("Finished warm up query.")
 
-    (1 to nQueries).map(i => {
+    val queryOrder = List(6, 14, 19, 16, 4, 12, 13, 1, 10, 3, 15, 2, 18, 20, 17, 7, 5, 8, 9, 22, 21, 11)
+    queryOrder.map(i => {
       val query = Class.forName(f"ch.ethz.queries.${benchmark}.Q${i}%d").newInstance.asInstanceOf[BenchmarkQuery]
       query.storageType = strEngine
       query.inputPath = parquetInputPath
@@ -55,7 +56,7 @@ object QueryRunner extends Logging {
 
       val sqlApiEntry = initializeExec(sc, strEngine)
       val data = query.executeQuery(sqlApiEntry)
-   //   data.show(100)
+      //   data.show(100)
       val cnt = data.count()
       finalizeExec(sqlApiEntry, strEngine)
 
@@ -92,6 +93,7 @@ object QueryRunner extends Logging {
 
   def finalizeExec = new {
     def apply(sqlApiEntry: (SQLContext, DataFrameReader), st: StorageEngine.Value) = (sqlApiEntry._1, st)
+
     def apply(sqlCxt: SQLContext, st: StorageEngine.Value) = {
       st match {
         case StorageEngine.TELL => {
