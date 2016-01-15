@@ -2,7 +2,7 @@ import sbt.Resolver
 
 assemblyJarName in assembly := "StorageEngBenchmark.jar"
 
-organization := "ch.ch.ethz"
+organization := "ch.ethz"
 
 name := "StorageEngBenchmark"
 
@@ -10,20 +10,14 @@ version := "1.0"
 
 scalaVersion := "2.10.4"
 
-mainClass in Compile := Some("ch.ch.ethz.queries.Runner")
-
-packageBin in Compile := file(s"${name.value}_${scalaBinaryVersion.value}.jar")
+mainClass in Compile := Some("ch.ethz.QueryRunner")
 
 resolvers ++= Seq(
   Resolver.mavenLocal,
   Resolver.file("Local", file(Path.userHome.absolutePath + "/.ivy2/local"))(Resolver.ivyStylePatterns)
 )
 
-unmanagedBase := baseDirectory.value / "lib"
-
-unmanagedJars in Compile := (baseDirectory.value ** "*.jar").classpath
-
-transitiveClassifiers in Global := Seq(Artifact.SourceClassifier)
+//transitiveClassifiers in Global := Seq(Artifact.SourceClassifier)
 
 libraryDependencies ++= Seq(
   "org.scalatest" % "scalatest_2.10" % "3.0.0-SNAP4",
