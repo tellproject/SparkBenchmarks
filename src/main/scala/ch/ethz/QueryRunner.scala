@@ -46,7 +46,7 @@ object QueryRunner extends Logging {
     logWarning("Finished warm up query.")
 
     val queryOrder = List(6, 14, 19, 16, 4, 12, 13, 1, 10, 3, 15, 2, 18, 20, 17, 7, 5, 8, 9, 22, 21, 11)
-    queryOrder.map(i => {
+    queryOrder.foreach(i => {
       val query = Class.forName(f"ch.ethz.queries.${benchmark}.Q${i}%d").newInstance.asInstanceOf[BenchmarkQuery]
       query.storageType = strEngine
       query.inputPath = parquetInputPath
