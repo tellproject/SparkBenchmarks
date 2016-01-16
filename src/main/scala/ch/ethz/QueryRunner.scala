@@ -60,7 +60,7 @@ object QueryRunner extends Logging {
       // data.limit(10).collect().map(r => logWarning(s"[P] ${r.toString()}"))
       // logWarning("Finished showing data")
       // data.show(10)
-      val cnt = data.count()
+      val cnt = data.collect().length
       finalizeExec(sqlApiEntry, strEngine)
 
       val end = System.nanoTime()
@@ -75,6 +75,8 @@ object QueryRunner extends Logging {
       case StorageEngine.TELL => {
         val tellCxt = new TellContext(sc)
         dfReader = tellCxt.read.format("ch.ethz.tell")
+        var numParts = sc.getConf.get("spark.sql.tell.numPartitions")
+        dfReader.option("numPartitions", numParts)
         tellCxt.startTransaction()
         sqlCxt = tellCxt
       }
@@ -90,7 +92,7 @@ object QueryRunner extends Logging {
       case _ => throw new IllegalArgumentException(s"Storage engine not supported: ${st}")
     }
     // repartitioning for 8 number of cores
-    dfReader.option("numPartitions", "8")
+
     (sqlCxt, dfReader)
   }
 
