@@ -31,10 +31,10 @@ class Q2 extends BenchmarkQuery {
       .join(europe, europe("ps_partkey") === $"p_partkey")
     //.cache
 
-    val minCost = brass.groupBy(brass("ps_partkey"))
+    val minCost = brass.groupBy(brass("ps_partkey").as("min_partkey"))
       .agg(min("ps_supplycost").as("min"))
 
-    brass.join(minCost, brass("ps_partkey") === minCost("ps_partkey"))
+    brass.join(minCost, brass("ps_partkey") === minCost("min_partkey"))
       .filter(brass("ps_supplycost") === minCost("min"))
       .select("s_acctbal", "s_name", "n_name", "p_partkey", "p_mfgr", "s_address", "s_phone", "s_comment")
       .sort($"s_acctbal".desc, $"n_name", $"s_name", $"p_partkey")

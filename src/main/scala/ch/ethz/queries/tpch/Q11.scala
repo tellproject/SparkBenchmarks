@@ -32,7 +32,7 @@ class Q11 extends BenchmarkQuery {
     val sumRes = tmp.agg(sum("value").as("total_value"))
 
     tmp.groupBy($"ps_partkey").agg(sum("value").as("part_value"))
-      .join(sumRes, $"part_value" > mul01($"total_value"))
+      .join(broadcast(sumRes), $"part_value" > mul01($"total_value"))
       .sort($"part_value".desc)
 
   }

@@ -19,13 +19,10 @@ class Q16 extends BenchmarkQuery {
     val partsupp = dfReader.options(getTableOptions("partsupp")).load()
     val part = dfReader.options(getTableOptions("part")).load()
 
-    val decrease = udf { (x: Double, y: Double) => x * (1 - y) }
     val complains = udf { (x: String) => x.matches(".*Customer.*Complaints.*") }
-    val polished = udf { (x: String) => x.startsWith("MEDIUM POLISHED") }
-    val numbers = udf { (x: Int) => x.toString().matches("49|14|23|45|19|3|36|9") }
 
-    val fparts = part.filter(($"p_brand" !== "Brand#45") && !polished($"p_type") &&
-      numbers($"p_size"))
+    val fparts = part.filter(($"p_brand" !== "Brand#45") && !($"p_type".startsWith("MEDIUM POLISHED")) &&
+      $"p_size".isin(49, 14, 23, 45, 19, 3, 36, 9))
       .select($"p_partkey", $"p_brand", $"p_type", $"p_size")
 
     supplier.filter(!complains($"s_comment"))
