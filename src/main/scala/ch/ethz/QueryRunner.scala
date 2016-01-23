@@ -1,5 +1,8 @@
 package ch.ethz
 
+import java.util
+import scala.collection.JavaConversions._
+
 import ch.ethz.queries.BenchmarkQuery
 import ch.ethz.tell.TellContext
 import org.apache.spark.sql.{DataFrameReader, SQLContext}
@@ -46,13 +49,14 @@ object QueryRunner extends Logging {
     logWarning("Finished warm up query.")
 
     val queryOrder = List(6, 14, 19, 16, 4, 12, 13, 1, 10, 3, 15, 2, 18, 20, 17, 7, 5, 8, 9, 22, 21, 11)
+    val results = new util.TreeMap[Integer, Long]()
     queryOrder.foreach(i => {
       val query = Class.forName(f"ch.ethz.queries.${benchmark}.Q${i}%d").newInstance.asInstanceOf[BenchmarkQuery]
       query.storageType = strEngine
       query.inputPath = parquetInputPath
 
       logInfo(s"Running query ${i}")
-      val start = System.nanoTime()
+      val start = System.currentTimeMillis()
 
       val sqlApiEntry = initializeExec(sc, strEngine)
       val data = query.executeQuery(sqlApiEntry)
@@ -63,9 +67,14 @@ object QueryRunner extends Logging {
       val cnt = data.collect().length
       finalizeExec(sqlApiEntry, strEngine)
 
-      val end = System.nanoTime()
-      logWarning(s"Running query ${i} took ${(end - start) / 1000000}ms and produced ${cnt} tuples.")
+      val end = System.currentTimeMillis()
+      results.put(i, (end - start) / 1000)
+      logWarning(s"Running query ${i} took ${(end - start)} ms and produced ${cnt} tuples.")
     })
+    logWarning("Query,Time in ms")
+    for ((q, r) <- results) {
+      logWarning(s"${q},${r}")
+    }
   }
 
   def initializeExec(sc: SparkContext, st: StorageEngine.Value): (SQLContext, DataFrameReader) = {
